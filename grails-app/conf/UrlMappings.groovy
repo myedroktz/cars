@@ -9,5 +9,9 @@ class UrlMappings {
 
         "/"(view:"/index")
         "500"(view:'/error')
-	}
+        
+        //UrlMapping to carRestController
+        "/api/cars"(resources: "carRest")
+
+    }
 }
