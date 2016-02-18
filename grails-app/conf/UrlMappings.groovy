@@ -11,7 +11,7 @@ class UrlMappings {
         "500"(view:'/error')
         
         //UrlMapping to carRestController
-        "/api/cars"(resources: "carRest")
+        "/api"(resources: "carRest")
 
     }
 }
