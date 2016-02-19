@@ -8,10 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <!-- Latest compiled and minified CSS -->
-        %{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">--}%
-        <!-- Latest compiled and minified JavaScript -->
-        %{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}%
         <meta name="layout" content="main"/>
         <title>Query Car</title>
     </head>
@@ -38,7 +34,7 @@
 
                             <div class="form-group">
                                 <label for="make">Make</label>
-                                <g:textField name="make" class="form-control" placeholder="Year"/>
+                                <g:textField name="make" class="form-control" placeholder="Make"/>
                             </div>
 
                             <div class="form-group">
