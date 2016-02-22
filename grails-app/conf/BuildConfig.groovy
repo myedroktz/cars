@@ -53,6 +53,10 @@ grails.project.dependency.resolution = {
 
         //Driver for MySQL
         compile 'mysql:mysql-connector-java:5.1.38'
+
+        //Rest and soap plug in
+        compile "com.github.groovy-wslite:groovy-wslite:0.7.2"
+
     }
 
     plugins {
@@ -62,8 +66,12 @@ grails.project.dependency.resolution = {
         // plugins for the compile step
         compile ":scaffolding:2.0.3"
         compile ':cache:1.1.2'
+
         //Grails Plugin for mysql
         compile "org.grails.plugins:mysql-connectorj:5.1.22.1"
+
+        //Rest Client Plugin
+        //compile ":rest-client-builder:2.0.0"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.13" // or ":hibernate4:4.3.5.1"
