@@ -23,35 +23,42 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-offset-0 col-md-12">
-                            <g:form class="form-inline" action="searchAjax">
+                            <div class="form-inline">
+                                <g:form action="searchAjax">
 
-                                %{--<div class="form-group">
-                                <label for="id">ID</label>
-                                <g:textField name="id" class="form-control" placeholder="Car Id"/>
-                                </div>--}%
+                                    %{--<div class="form-group">
+                                    <label for="id">ID</label>
+                                    <g:textField name="id" class="form-control" placeholder="Car Id"/>
+                                    </div>--}%
 
-                                <g:render template="formFields" bean="${car}"/>
+                                    <g:render template="formFields"/>
 
-                                <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="JSON"> JSON
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="View" checked> View
-                                </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="JSON"> JSON
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="View" checked> View
+                                    </label>
 
-                                <div class="form-group">
-                                    %{--<g:submitButton name="searchButton" value="Search" class="btn btn-primary"/>--}%
-                                    <g:submitToRemote   id="searchButton"
-                                                        value="Search"
-                                                        url="[controller: 'Car', action: 'searchAjax']"
-                                                        update="carListTable"
-                                                        onComplete="addRowHandlers()"
-                                                        class="btn btn-primary"/>
+                                    <div class="form-group">
+                                        %{--<g:submitButton name="searchButton" value="Search" class="btn btn-primary"/>--}%
+                                        <g:submitToRemote   id="searchButton"
+                                                            value="Search"
+                                                            url="[controller: 'Car', action: 'searchAjax']"
+                                                            update="carListTable"
+                                                            onComplete="addRowHandlers()"
+                                                            class="btn btn-success"/>
 
-                                    %{--Add the spinner image--}%
-                                    %{--<g:img id="spinner" style="display: none" uri="/images/spinner.gif"/>--}%
-                                </div>
-                            </g:form>
+                                        %{--Add the spinner image--}%
+                                        %{--<g:img id="spinner" style="display: none" uri="/images/spinner.gif"/>--}%
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" onclick="newCar()">New Car</button>
+                                    </div>
+                                </g:form>
+
+                            </div>
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -74,58 +81,10 @@
 
                 <tbody id="carListTable">
                     <g:render template="carTableRow" collection="${carList}" var="car"/>
-                </tbody
+                </tbody>
             </table>
         </div>
     </div>
-
-    <g:javascript>
-        var carId;
-        function addRowHandlers() {
-            var table = document.getElementById("carsTable");
-            var rows = table.getElementsByTagName("tr");
-            //if(rows.length = 1){
-            //    $('#carTableHead').hide();
-            //}else{
-            //    $('#carTableHead').show();
-            //}
-            for (i = 0; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler =
-                        function(row)
-                        {
-                            return function() {
-                                var cell = row.getElementsByTagName("td")[0];
-                                carId = cell.innerHTML;
-                                //alert("id:" + id);
-
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '/cars/carRest/show/',
-                                    dataType: 'json',
-                                    data: {id: carId},
-                                    success: function(response){
-                                        //alert(JSON.stringify(response));
-                                        //alert(response.model);
-
-                                        $(".modal-body [name='model']").val(response.model);
-                                        $(".modal-body [name='year']").val(response.year);
-                                        $(".modal-body [name='make']").val(response.make);
-                                        document.getElementById("carId").innerHTML = carId;
-
-                                        $('#myModal').modal();
-                                    }
-                                });
-                            };
-                        };
-
-                currentRow.onclick = createClickHandler(currentRow);
-            }
-        }
-        window.onload = addRowHandlers();
-
-
-    </g:javascript>
 
     <g:render template="formPopup"/>
 

@@ -34,14 +34,7 @@ class CarController {
     }
 
     def bindToPopup(){
-        println("---------------------------------------")
         def car = Car.findById(params.id.toInteger())
-        println("---------------------------------------")
-        println(car.id)
-        println(car.make)
-        println(car.model)
-        println(car.year)
-        println("---------------------------------------")
         render(template: 'formPopup', model:[car : car])
     }
 }
