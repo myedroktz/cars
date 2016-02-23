@@ -41,7 +41,8 @@
 
                                 <div class="form-group">
                                     %{--<g:submitButton name="searchButton" value="Search" class="btn btn-primary"/>--}%
-                                    <g:submitToRemote   value="Search"
+                                    <g:submitToRemote   id="searchButton"
+                                                        value="Search"
                                                         url="[controller: 'Car', action: 'searchAjax']"
                                                         update="carListTable"
                                                         onComplete="addRowHandlers()"
@@ -64,13 +65,12 @@
         <div class="col-md-offset-1 col-md-10">
             <table class="table table-hover" id="carsTable">
 
-                    <tr>
-                        <th>Id</th>
-                        <th>Make</th>
-                        <th >Model</th>
-                        <th>Year</th>
-
-                    </tr>
+                        <tr id="carTableHead">
+                            <th>Id</th>
+                            <th>Make</th>
+                            <th >Model</th>
+                            <th>Year</th>
+                        </tr>
 
                 <tbody id="carListTable">
                     <g:render template="carTableRow" collection="${carList}" var="car"/>
@@ -80,10 +80,15 @@
     </div>
 
     <g:javascript>
+        var carId;
         function addRowHandlers() {
             var table = document.getElementById("carsTable");
             var rows = table.getElementsByTagName("tr");
-
+            //if(rows.length = 1){
+            //    $('#carTableHead').hide();
+            //}else{
+            //    $('#carTableHead').show();
+            //}
             for (i = 0; i < rows.length; i++) {
                 var currentRow = table.rows[i];
                 var createClickHandler =
@@ -91,21 +96,22 @@
                         {
                             return function() {
                                 var cell = row.getElementsByTagName("td")[0];
-                                var id = cell.innerHTML;
+                                carId = cell.innerHTML;
                                 //alert("id:" + id);
 
                                 $.ajax({
                                     type: 'GET',
                                     url: '/cars/carRest/show/',
                                     dataType: 'json',
-                                    data: {id: id},
+                                    data: {id: carId},
                                     success: function(response){
                                         //alert(JSON.stringify(response));
                                         //alert(response.model);
 
-                                        $("[name='model']").val(response.model);
-                                        $("[name='year']").val(response.year);
-                                        $("[name='make']").val(response.make);
+                                        $(".modal-body [name='model']").val(response.model);
+                                        $(".modal-body [name='year']").val(response.year);
+                                        $(".modal-body [name='make']").val(response.make);
+                                        document.getElementById("carId").innerHTML = carId;
 
                                         $('#myModal').modal();
                                     }
@@ -117,6 +123,7 @@
             }
         }
         window.onload = addRowHandlers();
+
 
     </g:javascript>
 

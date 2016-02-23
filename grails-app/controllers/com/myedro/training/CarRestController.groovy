@@ -1,5 +1,7 @@
 package com.myedro.training
 
+import net.sf.ehcache.transaction.xa.commands.Command
+
 
 class CarRestController {
     static responseFormats = ["json","xml"]
@@ -45,6 +47,7 @@ class CarRestController {
     }
 
     def update(Long id, Car newCar) {
+//        request.getParameter("make")
         if (!newCar.hasErrors()) {
             def car = Car.get(id)
 
@@ -55,6 +58,8 @@ class CarRestController {
 
             car.properties = newCar.properties
             car.validate() && car.save()
+
+
             respond car
         }
         else {
