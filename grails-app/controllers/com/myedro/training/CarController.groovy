@@ -29,8 +29,20 @@ class CarController {
         }else{
             def response = restClient.get(path: "/", accept: ContentType.JSON, query: [make: params.make, model: params.model, year: params.year])
             carList = response.json
-            render (template: 'carSearchResult', collection : carList, var:"car")
-            //[carList : carList]
+            render (template: 'carTableRow', collection : carList, var:"car")
         }
     }
+
+    def bindToPopup(){
+        println("---------------------------------------")
+        def car = Car.findById(params.id.toInteger())
+        println("---------------------------------------")
+        println(car.id)
+        println(car.make)
+        println(car.model)
+        println(car.year)
+        println("---------------------------------------")
+        render(template: 'formPopup', model:[car : car])
+    }
 }
+

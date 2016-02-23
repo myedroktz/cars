@@ -30,20 +30,7 @@
                                 <g:textField name="id" class="form-control" placeholder="Car Id"/>
                                 </div>--}%
 
-                                <div class="form-group">
-                                    <label for="year">Year</label>
-                                    <g:textField name="year" class="form-control" placeholder="Year"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="make">Make</label>
-                                    <g:textField name="make" class="form-control" placeholder="Make"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="model">Model</label>
-                                    <g:textField name="model" class="form-control" placeholder="Model"/>
-                                </div>
+                                <g:render template="formFields" bean="${car}"/>
 
                                 <label class="radio-inline">
                                     <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="JSON"> JSON
@@ -54,7 +41,11 @@
 
                                 <div class="form-group">
                                     %{--<g:submitButton name="searchButton" value="Search" class="btn btn-primary"/>--}%
-                                    <g:submitToRemote value="Search" url="[controller: 'Car', action: 'searchAjax']" update="carListTable" class="btn btn-primary"/>
+                                    <g:submitToRemote   value="Search"
+                                                        url="[controller: 'Car', action: 'searchAjax']"
+                                                        update="carListTable"
+                                                        onComplete="addRowHandlers()"
+                                                        class="btn btn-primary"/>
 
                                     %{--Add the spinner image--}%
                                     %{--<g:img id="spinner" style="display: none" uri="/images/spinner.gif"/>--}%
@@ -69,25 +60,67 @@
             </div>
         </div>
 
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <table class="table table-hover" id="carsTable">
 
-        <div class="row">
-            <div class="col-md-offset-1 col-md-10">
-                <table class="table table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Make</th>
+                        <th >Model</th>
+                        <th>Year</th>
 
-                        <tr>
-                            <th>Id</th>
-                            <th>Make</th>
-                            <th >Model</th>
-                            <th>Year</th>
-                        </tr>
+                    </tr>
 
-                    <tbody id="carListTable">
-                        <g:render template="carSearchResult" collection="${carList}" var="car"/>
-                    </tbody
-                </table>
-            </div>
+                <tbody id="carListTable">
+                    <g:render template="carTableRow" collection="${carList}" var="car"/>
+                </tbody
+            </table>
         </div>
+    </div>
 
+    <g:javascript>
+        function addRowHandlers() {
+            var table = document.getElementById("carsTable");
+            var rows = table.getElementsByTagName("tr");
+
+            for (i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler =
+                        function(row)
+                        {
+                            return function() {
+                                var cell = row.getElementsByTagName("td")[0];
+                                var id = cell.innerHTML;
+                                //alert("id:" + id);
+
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/cars/carRest/show/',
+                                    dataType: 'json',
+                                    data: {id: id},
+                                    success: function(response){
+                                        //alert(JSON.stringify(response));
+                                        //alert(response.model);
+
+                                        $("[name='model']").val(response.model);
+                                        $("[name='year']").val(response.year);
+                                        $("[name='make']").val(response.make);
+
+                                        $('#myModal').modal();
+                                    }
+                                });
+                            };
+                        };
+
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
+
+    </g:javascript>
+
+    <g:render template="formPopup"/>
 
     </body>
 </html>
