@@ -6,6 +6,9 @@ class Car {
     String model
 
     static constraints = {
+        model size: 1..50, blank: false
+        make size: 1..50, blank: false
+        year min: 0, max: 9999, blank: false
     }
 
     static mapping = {

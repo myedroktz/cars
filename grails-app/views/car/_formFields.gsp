@@ -5,10 +5,10 @@
 
 <div class="form-group">
     <label for="make">Make</label>
-    <g:textField name="make" class="form-control" placeholder="Make"/>
+    <input id="make" type="text" maxlength="50" name="make" class="form-control" placeholder="Make"/>
 </div>
 
 <div class="form-group">
     <label for="model">Model</label>
-    <g:textField name="model" class="form-control" placeholder="Model"/>
+    <input id="model" type="text" maxlength="50" name="model" class="form-control" placeholder="Model"/>
 </div>

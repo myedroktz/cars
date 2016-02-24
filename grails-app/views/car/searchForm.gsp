@@ -48,7 +48,7 @@
                                         %{--<g:submitButton name="searchButton" value="Search" class="btn btn-primary"/>--}%
                                         <g:submitToRemote   id="searchButton"
                                                             value="Search"
-                                                            url="[                                        controller: 'Car', action: 'searchAjax']"
+                                                            url="[controller: 'Car', action: 'searchAjax']"
                                                             update="carListTable"
                                                             onLoading="showSpinner(true)"
                                                             onComplete="addRowHandlers(), updateTableHeader(), showSpinner(false)"
@@ -72,14 +72,14 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
             <table class="table table-hover" id="carsTable">
-
-                        <tr id="carTableHead">
-                            <th>Id</th>
-                            <th>Make</th>
-                            <th >Model</th>
-                            <th>Year</th>
+                    <thead>
+                        <tr id="carTableHead" class="active">
+                            <th class="col-md-2">Id</th>
+                            <th class="col-md-4">Make</th>
+                            <th class="col-md-4">Model</th>
+                            <th class="col-md-2">Year</th>
                         </tr>
-
+                    </thead>
                 <tbody id="carListTable">
                     <g:render template="carTableRow" collection="${carList}" var="car"/>
                 </tbody>

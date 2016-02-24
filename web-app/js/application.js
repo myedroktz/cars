@@ -1,6 +1,10 @@
 
 var carId;
-window.onload = addRowHandlers();
+
+$(document).ready(
+	addRowHandlers(),
+	updateTableHeader()
+);
 
 if (typeof jQuery !== 'undefined') {
 	(function($) {
@@ -148,7 +152,7 @@ $("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(functi
 	}
 });
 
-$("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(function(event){
+$("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(function(){
 		$("#searchButton").click();
 });
 
