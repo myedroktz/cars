@@ -6,7 +6,6 @@ import net.sf.ehcache.transaction.xa.commands.Command
 class CarRestController {
     static responseFormats = ["json","xml"]
 
-
     /***
      *  Example urls
      *  http://localhost:8080/cars/api?make=Ford&model=Mustang&year=2000
@@ -16,16 +15,19 @@ class CarRestController {
     def index() {
         def carList
         def query = Car.createCriteria()
-        carList = query.list{
+        carList = query.list(){
             and{
                 if(params.make){
-                    eq("make", params.make)
+                    like("make", params.make+'%')
                 }
                 if(params.model){
-                    eq("model", params.model)
+                    like("model", params.model+'%')
                 }
                 if(params.year){
-                    eq("year", params.year.toInteger())
+                    //like("year", params.year.toInteger())
+                    def yearIni = params.year.padRight(4,'0').toInteger()
+                    def yearEnd = params.year.padRight(4,'0').toInteger() + 10**(4 - params.year.length()) - 1
+                    between("year", yearIni, yearEnd)
                 }
             }
         }
@@ -72,7 +74,7 @@ class CarRestController {
         def message
 
         if (Car.exists(id)) {
-            Car.load(id).delete()
+            Car.load(id).delete(failOnError: true)
             status = 200
             message="Car with id ${id} was deleted"
         }

@@ -12,6 +12,11 @@ if (typeof jQuery !== 'undefined') {
 	})(jQuery);
 }
 
+function showSpinner(visible) {
+	if (visible) $('#spinner').show();
+	else $('#spinner').hide();
+}
+
 function cleanModal(){
 	$(".modal-body [name='model']").val('');
 	$(".modal-body [name='make']").val('');
@@ -83,7 +88,10 @@ function saveCar(){
 	});
 }
 
-function addRowHandlers() {
+/**
+ * Shows table header if there is data in the table, hides if not
+ */
+function updateTableHeader(){
 	var table = document.getElementById("carsTable");
 	var rows = table.getElementsByTagName("tr");
 
@@ -92,6 +100,26 @@ function addRowHandlers() {
 	}else{
 		$('#carTableHead').show();
 	}
+}
+
+/**
+ * Add onClick event to carsTable rows
+ */
+function addRowHandlers() {
+
+	$("#carsTable").find("tr").bind("click", function(e){
+		e.preventDefault();
+		var row = $(this);
+		carId = row.attr("attr-id");
+		getCar();
+	});
+}
+/**
+ *  Another way to add click handlers
+ */
+/* function addRowHandlers() {
+	 var table = document.getElementById("carsTable");
+	 var rows = table.getElementsByTagName("tr");
 
 	for (i = 0; i < rows.length; i++) {
 		var currentRow = table.rows[i];
@@ -101,7 +129,7 @@ function addRowHandlers() {
 				return function() {
 					var cell = row.getElementsByTagName("td")[0];
 					carId = cell.innerHTML;
-					//alert("id:" + id);
+					alert("id: " + currentRow.attr('id'));
 					getCar();
 
 				};
@@ -109,4 +137,18 @@ function addRowHandlers() {
 
 		currentRow.onclick = createClickHandler(currentRow);
 	}
-}
+}*/
+
+/**
+ * OnClick event for search form inputs
+ */
+$("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(function(event){
+	if(event.keyCode == 13){
+		$("#searchButton").click();
+	}
+});
+
+$("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(function(event){
+		$("#searchButton").click();
+});
+

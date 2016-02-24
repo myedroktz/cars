@@ -23,7 +23,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-offset-0 col-md-12">
-                            <div class="form-inline">
+                            <div class="form-inline" id="searchForm">
                                 <g:form action="searchAjax">
 
                                     %{--<div class="form-group">
@@ -41,21 +41,22 @@
                                     </label>
 
                                     <div class="form-group">
-                                        %{--<g:submitButton name="searchButton" value="Search" class="btn btn-primary"/>--}%
-                                        <g:submitToRemote   id="searchButton"
-                                                            value="Search"
-                                                            url="[controller: 'Car', action: 'searchAjax']"
-                                                            update="carListTable"
-                                                            onComplete="addRowHandlers()"
-                                                            class="btn btn-success"/>
-
-                                        %{--Add the spinner image--}%
-                                        %{--<g:img id="spinner" style="display: none" uri="/images/spinner.gif"/>--}%
+                                        <button type="button" class="btn btn-primary" onclick="newCar()">New Car</button>
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-primary" onclick="newCar()">New Car</button>
+                                        %{--<g:submitButton name="searchButton" value="Search" class="btn btn-primary"/>--}%
+                                        <g:submitToRemote   id="searchButton"
+                                                            value="Search"
+                                                            url="[                                        controller: 'Car', action: 'searchAjax']"
+                                                            update="carListTable"
+                                                            onLoading="showSpinner(true)"
+                                                            onComplete="addRowHandlers(), updateTableHeader(), showSpinner(false)"
+                                                            class="btn btn-success"/>
                                     </div>
+
+                                    %{--Add the spinner image--}%
+                                    <g:img id="spinner" style="display: none" uri="/images/spinner.gif"/>
                                 </g:form>
 
                             </div>

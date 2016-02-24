@@ -1,4 +1,4 @@
-<tr>
+<tr attr-id="${car.id}">
     <td class="active">${car.id}</td>
     <td class="success">${car.make}</td>
     <td class="success">${car.model}</td>

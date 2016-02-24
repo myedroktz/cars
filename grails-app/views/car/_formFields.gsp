@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="year">Year</label>
-    <g:textField name="year" class="form-control" placeholder="Year"/>
+    <input id="year" type="number" min="0" max="9999" name="year" class="form-control" placeholder="Year"/>
 </div>
 
 <div class="form-group">

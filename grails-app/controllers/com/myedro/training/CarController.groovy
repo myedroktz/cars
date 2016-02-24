@@ -27,7 +27,8 @@ class CarController {
             }
             */
         }else{
-            def response = restClient.get(path: "/", accept: ContentType.JSON, query: [make: params.make, model: params.model, year: params.year])
+            //def response = restClient.get(path: "/", accept: ContentType.JSON, query: [make: params.make, model: params.model, year: params.year])
+            def response = restClient.get(path: "?make=${params.make}&model=${params.model}&year=${params.year}", accept: ContentType.JSON)
             carList = response.json
             render (template: 'carTableRow', collection : carList, var:"car")
         }
