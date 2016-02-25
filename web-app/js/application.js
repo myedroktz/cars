@@ -49,6 +49,7 @@ function getCar(){
 			$(".modal-body [name='model']").val(response.model);
 			$(".modal-body [name='year']").val(response.year);
 			$(".modal-body [name='make']").val(response.make);
+			//$(".modal-body [name='carPlate']").val(response.carPlate);
 			document.getElementById("carId").innerHTML = '#ID '+carId;
 			document.getElementById("myModalLabel").innerHTML = 'Edit Car';
 			$('#btnDelete').show();

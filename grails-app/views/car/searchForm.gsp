@@ -75,9 +75,11 @@
                     <thead>
                         <tr id="carTableHead" class="active">
                             <th class="col-md-2">Id</th>
-                            <th class="col-md-4">Make</th>
-                            <th class="col-md-4">Model</th>
+                            <th class="col-md-2">Make</th>
+                            <th class="col-md-2">Model</th>
                             <th class="col-md-2">Year</th>
+                            <th class="col-md-2">Car Plate</th>
+                            <th class="col-md-2">Owner</th>
                         </tr>
                     </thead>
                 <tbody id="carListTable">

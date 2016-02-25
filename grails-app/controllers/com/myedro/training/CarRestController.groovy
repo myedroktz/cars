@@ -1,5 +1,6 @@
 package com.myedro.training
 
+import grails.converters.JSON
 import net.sf.ehcache.transaction.xa.commands.Command
 
 
@@ -31,11 +32,16 @@ class CarRestController {
                 }
             }
         }
-        respond carList
+        JSON.use('myConfig') {
+            respond carList
+        }
     }
 
     def show(Integer id) {
-        respond Car.findById(id)
+        Car car = Car.findById(id,[fetch:[owner:"eager"]])
+        JSON.use('myConfig'){
+            respond car
+        }
     }
 
     def save(Car car) {
