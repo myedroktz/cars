@@ -1,0 +1,9 @@
+import com.myedro.training.Car
+
+/**
+ * Created by myedro on 25/02/16.
+ */
+
+target('default': 'The default target') {
+    println(Car.findById(1).model)
+}
