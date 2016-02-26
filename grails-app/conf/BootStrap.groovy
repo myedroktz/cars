@@ -8,7 +8,7 @@ class BootStrap {
         /**
          * Creates a JSON config for Car that retrieves the Owner (but excludes his owned cars)
          */
-        JSON.createNamedConfig("myConfig") { cfg ->
+        JSON.createNamedConfig("Car") { cfg ->
             cfg.registerObjectMarshaller(Car) { Car car ->
                 return [ class: Car.name,//'com.myedro.training.Car',
                          id: car.id,
@@ -28,6 +28,17 @@ class BootStrap {
             }
         }
 
+        JSON.createNamedConfig("Owner") { cfg ->
+            cfg.registerObjectMarshaller(Owner) { Owner owner ->
+                return [ class: Owner.name, //'com.myedro.training.Owner',
+                         id: owner.id,
+                         name: owner.name,
+                         lastName: owner.lastName,
+                         dni: owner.dni,
+                         nationality: owner.nationality
+                 ]
+            }
+        }
     }
     def destroy = {
     }

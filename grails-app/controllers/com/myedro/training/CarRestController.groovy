@@ -32,14 +32,14 @@ class CarRestController {
                 }
             }
         }
-        JSON.use('myConfig') {
+        JSON.use('Car') {
             respond carList
         }
     }
 
     def show(Integer id) {
         Car car = Car.findById(id,[fetch:[owner:"eager"]])
-        JSON.use('myConfig'){
+        JSON.use('Car'){
             respond car
         }
     }

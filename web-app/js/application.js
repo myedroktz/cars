@@ -3,7 +3,8 @@ var carId;
 
 $(document).ready(
 	addRowHandlers(),
-	updateTableHeader()
+	updateTableHeader(),
+	populateSelectOwner()
 );
 
 if (typeof jQuery !== 'undefined') {
@@ -25,6 +26,7 @@ function cleanModal(){
 	$(".modal-body [name='model']").val('');
 	$(".modal-body [name='make']").val('');
 	$(".modal-body [name='year']").val('');
+	$(".modal-body [name='carPlate']").val('');
 	document.getElementById("carId").innerHTML = '';
 }
 
@@ -49,7 +51,9 @@ function getCar(){
 			$(".modal-body [name='model']").val(response.model);
 			$(".modal-body [name='year']").val(response.year);
 			$(".modal-body [name='make']").val(response.make);
-			//$(".modal-body [name='carPlate']").val(response.carPlate);
+			$(".modal-body [name='carPlate']").val(response.carPlate);
+			//$(".modal-body [name='owner_name']").val(response.owner.name);
+			//$(".modal-body [name='owner_lastName']").val(response.owner.lastName);
 			document.getElementById("carId").innerHTML = '#ID '+carId;
 			document.getElementById("myModalLabel").innerHTML = 'Edit Car';
 			$('#btnDelete').show();
@@ -148,12 +152,30 @@ function addRowHandlers() {
  * OnClick event for search form inputs
  */
 $("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(function(event){
-	if(event.keyCode == 13){
+	if(event.keyCode == 13){ //Capture Enter
+		$("#searchButton").click();
+	}else if(event.keyCode != 9){ // Capture Tab
 		$("#searchButton").click();
 	}
 });
 
-$("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(function(){
-		$("#searchButton").click();
-});
 
+function populateSelectOwner(){
+	$.getJSON("/cars/ownerRest/", function(data){
+		var options = $("#owner")
+		for (var i = 0, len = data.length; i < len; i++) {
+			var item=data[i];
+			options.append("<option value='" + item.name + "' >" + item.name + ' ' + item.lastName + "</option>");
+		}
+	});
+}
+
+
+//
+//<tr attr-id="${owner.id}">
+//	<td class="active">${owner.id}</td>
+//	<td class="success">${owner.name} hola</td>
+//	<td class="success">${owner.lastName}</td>
+//	<td class="success">${owner.dni}</td>
+//	<td class="success">${owner.nationality}</td>
+//</tr>

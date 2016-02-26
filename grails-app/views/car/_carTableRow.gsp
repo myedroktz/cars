@@ -6,4 +6,3 @@
     <td class="success">${car.carPlate}</td>
     <td class="success">${car.owner.name + ' ' + car.owner.lastName}</td>
 </tr>
-

@@ -13,5 +13,7 @@ class UrlMappings {
         //UrlMapping to carRestController
         "/api"(resources: "carRest")
 
+        "/api/owner"(resources: "ownerRest")
+
     }
 }

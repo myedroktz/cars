@@ -12,3 +12,14 @@
     <label for="model">Model</label>
     <input id="model" type="text" maxlength="50" name="model" class="form-control" placeholder="Model"/>
 </div>
+
+<div class="form-group">
+    <label for="carPlate">Car Plate</label>
+    <input id="carPlate" type="text" maxlength="50" name="carPlate" class="form-control" placeholder="Car plate"/>
+</div>
+
+<div class="form-group">
+    <label for="owner">Owner</label>
+    <select id="owner" class="form-control">
+    </select>
+</div>
