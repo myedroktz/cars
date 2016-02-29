@@ -9,11 +9,11 @@
 </div>
 
 <div class="form-group">
-    <label for="dni">Last Name</label>
+    <label for="dni">DNI</label>
     <input id="dni" type="number" min="0" max="2147483647" name="dni" class="form-control" placeholder="DNI"/>
 </div>
 
 <div class="form-group">
-    <label for="nationality">Last Name</label>
+    <label for="nationality">Nationality</label>
     <input id="nationality" type="text" maxlength="50" name="nationality" class="form-control" placeholder="Nationality"/>
 </div>

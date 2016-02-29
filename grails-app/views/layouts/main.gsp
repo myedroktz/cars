@@ -19,7 +19,9 @@
 		<!-- Add bootstrap module -->
 		<r:require module="bootstrap"/>
 
-		%{--<g:javascript library="application"/>--}%
+		<!-- Add Jquery -->
+		<g:javascript library='jquery' />
+
 		<r:layoutResources />
 	</head>
 	<body>

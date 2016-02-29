@@ -14,8 +14,8 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveCar()">Save changes</button>
-                <button type="button" class="btn btn-danger" onclick="deleteCar()" id="btnDelete">Delete Car</button>
+                <button type="button" class="btn btn-primary" onclick="saveOwner($('#ownerId').attr('attr-id'))">Save changes</button>
+                <button type="button" class="btn btn-danger" onclick="deleteOwner($('#ownerId').attr('attr-id'))" id="btnDelete">Delete Car</button>
             </div>
         </div>
     </div>

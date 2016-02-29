@@ -10,7 +10,7 @@
     <head>
         <meta name="layout" content="main"/>
         <title>Query Car</title>
-        <g:javascript library='jquery' />
+        <r:require module="carSearchForm"/>
     </head>
 
     <body>
@@ -40,7 +40,7 @@
                                 </label>
 
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-primary" onclick="newCar()">New Car</button>
+                                    <button type="button" class="btn btn-primary" onclick="loadNewForm('#myModal','#carId')">New Car</button>
                                 </div>
 
                                 <div class="form-group">
@@ -50,7 +50,9 @@
                                                         url="[controller: 'Car', action: 'searchAjax']"
                                                         update="carListTable"
                                                         onLoading="showSpinner(true)"
-                                                        onComplete="addRowHandlers(), updateTableHeader(), showSpinner(false)"
+                                                        onComplete="addRowHandlers('#carsTable', '#myModal',loadCarInModal),
+                                                                    updateTableHeader('#carsTable','#carTableHead'),
+                                                                     showSpinner(false)"
                                                         class="btn btn-success"/>
                                 </div>
 

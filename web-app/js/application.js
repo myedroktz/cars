@@ -1,12 +1,13 @@
+/**
+ *  GENERAL APPLICATION FUNCTIONS
+ */
 
-var carId;
 
-$(document).ready(
-	addRowHandlers(),
-	updateTableHeader(),
-	populateSelectOwner()
-);
 
+/***
+ * Shows or hiddes spinner
+ * @param visible
+ */
 if (typeof jQuery !== 'undefined') {
 	(function($) {
 		$('#spinner').ajaxStart(function() {
@@ -16,137 +17,85 @@ if (typeof jQuery !== 'undefined') {
 		});
 	})(jQuery);
 }
-
 function showSpinner(visible) {
 	if (visible) $('#spinner').show();
 	else $('#spinner').hide();
 }
 
-function cleanModal(){
-	$(".modal-body [name='model']").val('');
-	$(".modal-body [name='make']").val('');
-	$(".modal-body [name='year']").val('');
-	$(".modal-body [name='carPlate']").val('');
-	document.getElementById("carId").innerHTML = '';
-}
 
-function newCar(){
-	carId = '';
+/***
+ * Opens a modal form for a New operation
+ * @param modalId
+ * @param modalKeyElement
+ */
+function loadNewForm(modalId,modalKeyElement){
 	$('#btnDelete').hide();
-	cleanModal();
-	document.getElementById("myModalLabel").innerHTML = 'New Car';
-	$('#myModal').modal();
+	cleanModal(modalId,modalKeyElement);
+	document.getElementById("myModalLabel").innerHTML = 'New';
+	$(modalId).modal();
 }
 
-
-function getCar(){
-	$.ajax({
-		type: 'GET',
-		url: '/cars/carRest/show/',
-		dataType: 'json',
-		data: {id: carId},
-		success: function(response){
-			//alert(JSON.stringify(response));
-			//alert(response.model);
-			$(".modal-body [name='model']").val(response.model);
-			$(".modal-body [name='year']").val(response.year);
-			$(".modal-body [name='make']").val(response.make);
-			$(".modal-body [name='carPlate']").val(response.carPlate);
-			//$(".modal-body [name='owner_name']").val(response.owner.name);
-			//$(".modal-body [name='owner_lastName']").val(response.owner.lastName);
-			document.getElementById("carId").innerHTML = '#ID '+carId;
-			document.getElementById("myModalLabel").innerHTML = 'Edit Car';
-			$('#btnDelete').show();
-			$('#myModal').modal();
-		}
-	});
-}
-function deleteCar(){
+/***
+ * Delete an object via ajax
+ * @param objectId
+ * @param url
+ * @param successCallback
+ */
+function deleteObject(objectId,url,successCallback){
 	$.ajax({
 		type: 'DELETE',
-		url: '/cars/carRest/delete/' + carId,
+		url: url + objectId,
 		dataType: 'json',
-
-		success: function(response){
-			$('#myModal').modal('hide');
-			$('#searchButton').trigger('click');
-			//alert(JSON.stringify(response));
-			//document.getElementById("carId").textContent
+		success: successCallback
 		}
-	});
+	);
 }
 
-function saveCar(){
-	var method = ((carId == '') ? 'save' : 'update');
+/***
+ * Saves/updates an object via ajax
+ * @param objectId
+ * @param url
+ * @param objectData
+ * @param successCallback
+ */
+function saveObject(objectId, url, objectData, successCallback){
+	var method = ((objectId == '') ? 'save' : 'update');
 	$.ajax({
 		type: 'POST', //DOES NOT WORK WITH PUT
-		url: '/cars/carRest/' + method + '/' + carId,
+		url: url + method + '/' + objectId,
 		dataType: 'json',
-		data: {
-			model: $(".modal-body [name='model']").val(),
-			year: $(".modal-body [name='year']").val(),
-			make: $(".modal-body [name='make']").val()
-		},
-		//beforeSend: function(){alert($(".modal-body [name='model']").val();},
-		success: function(response){
-			$('#myModal').modal('hide');
-			$('#searchButton').trigger('click');
-			//alert(JSON.stringify(response));
-			//document.getElementById("carId").textContent
-		}
+		data: objectData,
+		success: successCallback
+
 	});
 }
 
 /**
  * Shows table header if there is data in the table, hides if not
  */
-function updateTableHeader(){
-	var table = document.getElementById("carsTable");
+function updateTableHeader(tableId, tableHeadId){
+	var table = document.getElementById(tableId.substring(1));
 	var rows = table.getElementsByTagName("tr");
 
 	if(rows.length <= 1){
-		$('#carTableHead').hide();
+		$(tableHeadId).hide();
 	}else{
-		$('#carTableHead').show();
+		$(tableHeadId).show();
 	}
 }
 
 /**
  * Add onClick event to carsTable rows
  */
-function addRowHandlers() {
-
-	$("#carsTable").find("tr").bind("click", function(e){
+function addRowHandlers(tableId, modalId, myCallback) {
+	$(tableId).find("tr").bind("click", function(e){
 		e.preventDefault();
 		var row = $(this);
-		carId = row.attr("attr-id");
-		getCar();
+		var objectId = row.attr("attr-id");
+		myCallback(objectId, modalId);
 	});
 }
-/**
- *  Another way to add click handlers
- */
-/* function addRowHandlers() {
-	 var table = document.getElementById("carsTable");
-	 var rows = table.getElementsByTagName("tr");
 
-	for (i = 0; i < rows.length; i++) {
-		var currentRow = table.rows[i];
-		var createClickHandler =
-			function(row)
-			{
-				return function() {
-					var cell = row.getElementsByTagName("td")[0];
-					carId = cell.innerHTML;
-					alert("id: " + currentRow.attr('id'));
-					getCar();
-
-				};
-			};
-
-		currentRow.onclick = createClickHandler(currentRow);
-	}
-}*/
 
 /**
  * OnClick event for search form inputs
@@ -160,22 +109,3 @@ $("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(functi
 });
 
 
-function populateSelectOwner(){
-	$.getJSON("/cars/ownerRest/", function(data){
-		var options = $("#owner")
-		for (var i = 0, len = data.length; i < len; i++) {
-			var item=data[i];
-			options.append("<option value='" + item.name + "' >" + item.name + ' ' + item.lastName + "</option>");
-		}
-	});
-}
-
-
-//
-//<tr attr-id="${owner.id}">
-//	<td class="active">${owner.id}</td>
-//	<td class="success">${owner.name} hola</td>
-//	<td class="success">${owner.lastName}</td>
-//	<td class="success">${owner.dni}</td>
-//	<td class="success">${owner.nationality}</td>
-//</tr>
