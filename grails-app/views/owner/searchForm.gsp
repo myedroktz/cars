@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <h6 class="text-center">Cars Query Project</h6>
+                <h6 class="text-center">Cars Query Project | <a href="${createLink(controller: 'car', action: 'searchForm')}">Go to Cars</a></h6>
             </div>
         </div>
     </div>

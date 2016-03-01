@@ -46,11 +46,21 @@ function updateTableContent(tableBodyId){
             var item=data[i];
             tableBody.append($('<tr>')
                     .attr('attr-id',item.id)
-                    .append($('<td>').text(item.id))
-                    .append($('<td>').text(item.name))
-                    .append($('<td>').text(item.lastName))
-                    .append($('<td>').text(item.dni))
-                    .append($('<td>').text(item.nationality))
+                    .append($('<td>')
+                        .text(item.id)
+                        .attr('class','active'))
+                    .append($('<td>')
+                        .text(item.name)
+                        .attr('class','success'))
+                    .append($('<td>')
+                        .text(item.lastName)
+                        .attr('class','success'))
+                    .append($('<td>')
+                        .text(item.dni)
+                        .attr('class','success'))
+                    .append($('<td>')
+                        .text(item.nationality)
+                        .attr('class','success'))
             );
         };
 

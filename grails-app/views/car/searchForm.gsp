@@ -25,12 +25,9 @@
                         <div class="form-inline" id="searchForm">
                             <g:form action="searchAjax">
 
-                            %{--<div class="form-group">
-                            <label for="id">ID</label>
-                            <g:textField name="id" class="form-control" placeholder="Car Id"/>
-                            </div>--}%
-
                                 <g:render template="formFields"/>
+
+                                <input type="hidden" name="offset" id="offset" value="0"/>
 
                                 <label class="radio-inline">
                                     <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="JSON"> JSON
@@ -64,7 +61,8 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <h6 class="text-center">Cars Query Project</h6>
+                    <h6 class="text-center">Cars Query Project | <a href="${createLink(controller: 'owner', action: 'searchForm')}">Go to Owners</a>
+                    </h6>
                 </div>
             </div>
         </div>
@@ -89,6 +87,24 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="panel panel-primary" id="#paginateButtons">
+                <div class="panel-body">
+                    <div class="col-md-offset-5 col-md-2">
+                        <button id="buttonBack" onclick="decreaseOffset('#offset')" type="button" class="btn-default btn-lg">
+                            <
+                        </button>
+                        <button id="buttonNext" onclick="increaseOffset('#offset')" type="button" class="btn-default btn-lg">
+                            >
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <g:render template="formPopup"/>
 

@@ -40,6 +40,25 @@ $("#owner").keyup(function(event){
 });
 
 
+/***
+* Update hidden form for pagination
+*/
+function increaseOffset(offsetElementId){
+    $(offsetElementId).val(parseInt($(offsetElementId).val()) + 10);
+    $("#searchButton").trigger('click');
+}
+function decreaseOffset(offsetElementId){
+    $(offsetElementId).val(parseInt($(offsetElementId).val()) - 10);
+    (($(offsetElementId).val() < 0) ? $(offsetElementId).val(0) : 1);
+    $("#searchButton").trigger('click');
+}
+
+
+/***
+ *
+ * @param ownerInputElement
+ * @param ownerListElement
+ */
 function loadOwnerList(ownerInputElement, ownerListElement){
 
     $(ownerListElement).empty();

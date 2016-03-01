@@ -16,7 +16,7 @@ class CarRestController {
     def index() {
         def carList
         def query = Car.createCriteria()
-        carList = query.list(){
+        carList = query.list(max:10, offset:params.offset){
             and{
                 if(params.make){
                     like("make", params.make+'%')
