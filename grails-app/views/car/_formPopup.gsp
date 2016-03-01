@@ -11,7 +11,12 @@
                    <g:render template="formFields"/>
                     <div class="form-group">
                         <label for="owner">Owner</label>
-                        <input id="owner" autocomplete="off" type="text" maxlength="50" name="owner" class="form-control" placeholder="Owner"/>
+                        <div class="input-group">
+                            <input disabled="true" id="owner" autocomplete="off" type="text" maxlength="50" name="owner" class="form-control" placeholder="Owner"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" id="editOwner">Edit</button>
+                            </span>
+                        </div>
                     </div>
                     <div id="ownerList" class="btn-group">
                     </div>

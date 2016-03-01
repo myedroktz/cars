@@ -7,7 +7,7 @@ class OwnerRestController {
     def index() {
         def ownerList
         def query = Owner.createCriteria()
-        ownerList = query.list(){
+        ownerList = query.list(max:10){
             and{
                 if(params.name){
                     like("name", params.name+'%')

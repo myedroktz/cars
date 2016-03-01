@@ -24,6 +24,15 @@ $("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(functi
 });
 
 /***
+ * OnClick event for owner edit button
+ */
+$("#editOwner").click(function(){
+    $("#owner").prop('disabled',false);
+    $("#owner").val('');
+    $("#owner").trigger('keyup',13);
+});
+
+/***
  * OnClick event for owner text box
  */
 $("#owner").keyup(function(event){
@@ -52,6 +61,7 @@ function loadOwnerList(ownerInputElement, ownerListElement){
             var row = $(this);
             $("#owner").val(row.text());
             $("#owner").attr('attr-ownerId',row.attr('attr-id'));
+            $("#owner").prop('disabled',true);
             ownerListElement.hide();
         });
 
