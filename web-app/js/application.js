@@ -66,7 +66,6 @@ function saveObject(objectId, url, objectData, successCallback){
 		dataType: 'json',
 		data: objectData,
 		success: successCallback
-
 	});
 }
 
@@ -95,17 +94,4 @@ function addRowHandlers(tableId, modalId, myCallback) {
 		myCallback(objectId, modalId);
 	});
 }
-
-
-/**
- * OnClick event for search form inputs
- */
-$("#searchForm").find("[name='year'],[name='model'],[name='make']").keyup(function(event){
-	if(event.keyCode == 13){ //Capture Enter
-		$("#searchButton").click();
-	}else if(event.keyCode != 9){ // Capture Tab
-		$("#searchButton").click();
-	}
-});
-
 
