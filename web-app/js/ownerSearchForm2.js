@@ -1,27 +1,17 @@
-/*function populateSelectOwner(){
-    $.getJSON("/cars/ownerRest/", function(data){
-        var options = $("#owner")
-        for (var i = 0, len = data.length; i < len; i++) {
-            var item=data[i];
-            options.append("<option value='" + item.name + "' >" + item.name + ' ' + item.lastName + "</option>");
-        }
-    });
-}*/
-/***
- *  OWNER SEARCH FORM FUNCTIONS
- */
+/************************************
+ *  OWNER SEARCH FORM FUNCTIONS     *
+ ************************************/
 
 /***
- * Execute when document is ready
+ * Stuff to execute when document is ready
  */
 $(document).ready(
-    $('#searchButton').trigger('click'),
-    addRowHandlers("#ownersTable", '#myModal',loadOwnerInModal),
-    updateTableHeader("#ownersTable",'#ownerTableHead')
-    //populateSelectOwner()
+    $('#searchButton').trigger('click')
 );
 
-
+/***
+ * Keyup listener for fields
+ */
 $("#searchForm").find("[name='name'],[name='lastName'],[name='dni'],[name='nationality']").keyup(function(event){
     if(event.keyCode == 13){ //Capture Enter
         $("#searchButton").click();
@@ -30,7 +20,10 @@ $("#searchForm").find("[name='name'],[name='lastName'],[name='dni'],[name='natio
     }
 });
 
-
+/***
+ * Updates table rows using the REST API
+ * @param tableBodyId: id of the table body (with sharp). Example: "#MyTableBody"
+ */
 function updateTableContent(tableBodyId){
     $(tableBodyId).empty();
     var queryString = "/cars/ownerRest/" +
@@ -69,7 +62,6 @@ function updateTableContent(tableBodyId){
         updateTableHeader("#ownersTable",'#ownerTableHead');
     });
 }
-
 
 /***
  * Load owner data in a modal form
@@ -136,5 +128,3 @@ function cleanModal(modalId, modalKeyElement){
     document.getElementById(modalKeyElement.substring(1)).innerHTML = '';
     $(modalKeyElement).attr('attr-id', '');
 }
-
-

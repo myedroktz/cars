@@ -1,14 +1,13 @@
-/***
- *  CAR SEARCH FORM FUNCTIONS
- */
+/******************************
+ *  CAR SEARCH FORM FUNCTIONS *
+ ******************************/
 
 /***
- * Execute when document is ready
+ * Stuff to execute when document is ready
  */
 $(document).ready(
     addRowHandlers("#carsTable", '#myModal',loadCarInModal),
     updateTableHeader("#carsTable",'#carTableHead')
-    //populateSelectOwner()
 );
 
 
@@ -39,6 +38,38 @@ $("#owner").keyup(function(event){
   loadOwnerList($("#owner"),$("#ownerList"));
 });
 
+/**
+ * Keyup event for carPlate (Input validation)
+ * */
+$(".modal-body").find("#carPlate").keyup(function(){
+    var regexp = /^[A-Z]{3}[0-9]{3}$/;
+    var isCarPlate = regexp.test($(this).val());
+    if(isCarPlate){
+        $(".modal-body #carPlateFormGroup").removeClass('has-error');
+    }else{
+        $(".modal-body #carPlateFormGroup").addClass('has-error');
+    }
+});
+
+/**
+ * Keyup event for year (Input validation)
+ */
+$(".modal-body").find("#year").keyup(function(){
+    var regexp = /^[0-9]{4}$/;
+    var isFourDigits = regexp.test($(this).val());
+    if(isFourDigits){
+        $(".modal-body #yearFormGroup").removeClass('has-error');
+    }else{
+        $(".modal-body #yearFormGroup").addClass('has-error');
+    }
+})
+
+/***
+ * Focusout event for popover on failed save
+ */
+$("#saveButton").focusout(function(){
+    $("#saveButton").popover('hide');
+});
 
 /***
 * Update hidden form for pagination
@@ -53,9 +84,7 @@ function decreaseOffset(offsetElementId){
     $("#searchButton").trigger('click');
 }
 
-
 /***
- *
  * @param ownerInputElement
  * @param ownerListElement
  */
@@ -83,11 +112,8 @@ function loadOwnerList(ownerInputElement, ownerListElement){
             $("#owner").prop('disabled',true);
             ownerListElement.hide();
         });
-
-
     });
 }
-
 
 /***
  * Load car data in a modal form
@@ -126,6 +152,8 @@ function cleanModal(modalId, modalKeyElement){
     $(modalId + " #ownerList").hide();
     document.getElementById(modalKeyElement.substring(1)).innerHTML = '';
     $(modalKeyElement).attr('attr-id', '');
+    $(".modal-body #carPlateFormGroup").removeClass("has-error");
+    $(".modal-body #yearFormGroup").removeClass("has-error");
 }
 
 /***
@@ -145,6 +173,7 @@ function deleteCar(objectId){
  * @param objectId: car Id or empty string
  */
 function saveCar(objectId){
+
     saveObject(	objectId,
         '/cars/carRest/',
         {
@@ -157,5 +186,9 @@ function saveCar(objectId){
         function(response){
             $('#myModal').modal('hide');
             $('#searchButton').trigger('click');
-        });
+        },
+        function(response){
+            $("#saveButton").popover('show');
+        }
+    );
 }

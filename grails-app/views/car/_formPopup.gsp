@@ -7,7 +7,7 @@
             </div>
 
             <div class="modal-body" id="modal-body">
-                <g:form>
+                <g:form id="submitCarFormAjax">
                    <g:render template="formFields"/>
                     <div class="form-group">
                         <label for="owner">Owner</label>
@@ -24,9 +24,19 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="cleanModal('#myModal','#carId')" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveCar($('#carId').attr('attr-id'))">Save changes</button>
-                <button type="button" class="btn btn-danger" onclick="deleteCar($('#carId').attr('attr-id'))" id="btnDelete">Delete Car</button>
+                <button type="button" class="btn btn-default" onclick="cleanModal('#myModal','#carId')"
+                        data-dismiss="modal">Close</button>
+
+                <button id="saveButton" type="button" class="btn btn-primary"
+                        onclick="saveCar($('#carId').attr('attr-id'))"
+                        data-trigger="manual"
+                        data-container="body"
+                        data-toggle="popover"
+                        data-placement="top"
+                        data-content="There was a problem saving, check your inputs">Save changes</button>
+
+                <button type="button" class="btn btn-danger" onclick="deleteCar($('#carId').attr('attr-id'))"
+                        id="btnDelete">Delete Car</button>
             </div>
         </div>
     </div>

@@ -58,14 +58,17 @@ function deleteObject(objectId,url,successCallback){
  * @param objectData
  * @param successCallback
  */
-function saveObject(objectId, url, objectData, successCallback){
+function saveObject(objectId, url, objectData, successCallback, errorCallback){
+	if (typeof(errorCallback)==='undefined') errorCallback = function(){alert("Error saving/updating");};
+
 	var method = ((objectId == '') ? 'save' : 'update');
 	$.ajax({
 		type: 'POST', //DOES NOT WORK WITH PUT
 		url: url + method + '/' + objectId,
 		dataType: 'json',
 		data: objectData,
-		success: successCallback
+		success: successCallback,
+		error: errorCallback
 	});
 }
 
