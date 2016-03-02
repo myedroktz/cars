@@ -49,6 +49,7 @@
                                                         onLoading="showSpinner(true)"
                                                         onComplete="addRowHandlers('#carsTable', '#myModal',loadCarInModal),
                                                                     updateTableHeader('#carsTable','#carTableHead'),
+                                                                    updatePaginateButtons('#carsTable','#paginateButtons'),
                                                                      showSpinner(false)"
                                                         class="btn btn-success"/>
                                 </div>
@@ -90,7 +91,7 @@
 
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <div class="panel panel-primary" id="#paginateButtons">
+            <div class="panel panel-primary" id="paginateButtons">
                 <div class="panel-body">
                     <div class="col-md-offset-5 col-md-2">
                         <button id="buttonBack" onclick="decreaseOffset('#offset')" type="button" class="btn-default btn-lg">

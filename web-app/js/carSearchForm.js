@@ -7,7 +7,8 @@
  */
 $(document).ready(
     addRowHandlers("#carsTable", '#myModal',loadCarInModal),
-    updateTableHeader("#carsTable",'#carTableHead')
+    updateTableHeader("#carsTable",'#carTableHead'),
+    updatePaginateButtons("#carsTable",'#paginateButtons')
 );
 
 
@@ -82,6 +83,19 @@ function decreaseOffset(offsetElementId){
     $(offsetElementId).val(parseInt($(offsetElementId).val()) - 10);
     (($(offsetElementId).val() < 0) ? $(offsetElementId).val(0) : 1);
     $("#searchButton").trigger('click');
+}
+
+function updatePaginateButtons(tableId, paginateButtonsDivId){
+    var table = document.getElementById(tableId.substring(1));
+    var rows = table.getElementsByTagName("tr");
+
+    if(rows.length <= 1){
+
+        $(paginateButtonsDivId).hide();
+    }else{
+
+        $(paginateButtonsDivId).show();
+    }
 }
 
 /***
