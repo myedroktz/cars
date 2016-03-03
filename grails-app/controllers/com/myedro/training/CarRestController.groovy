@@ -9,29 +9,49 @@ class CarRestController {
 
     /***
      *  Example urls
+     *  http://localhost:8080/cars/api?sort=model&order=desc
+     *  http://localhost:8080/cars/api?make=Ford&model=Mustang&year=2000&owner=gust
+     *  http://localhost:8080/cars/api?make=Ford&model=Mustang&year=2000&owner=10000000
      *  http://localhost:8080/cars/api?make=Ford&model=Mustang&year=2000
      *  http://localhost:8080/cars/api?make=Ford&model=Mustang
      *  http://localhost:8080/cars/api?make=Ford
      */
     def index() {
-        def carList
-        def query = Car.createCriteria()
-        carList = query.list(max:10, offset:params.offset){
+        def query = {
             and{
-                if(params.make){
-                    like("make", params.make+'%')
-                }
-                if(params.model){
-                    like("model", params.model+'%')
-                }
+                if(params.make)
+                    like("make", '%' + params.make + '%')
+                if(params.model)
+                    like("model", '%' + params.model + '%')
                 if(params.year){
                     //like("year", params.year.toInteger())
                     def yearIni = params.year.padRight(4,'0').toInteger()
                     def yearEnd = params.year.padRight(4,'0').toInteger() + 10**(4 - params.year.length()) - 1
                     between("year", yearIni, yearEnd)
                 }
+                if (params.owner)
+                    owner {
+                        if (params.owner.toString().isInteger())
+                            eq("dni", params.int('dni'))
+                        else
+                            or {
+                                like("lastName", '%' + params.owner + '%')
+                                like("name", '%' + params.owner + '%')
+                            }
+                    }
             }
+
+            if (params.sort)
+                order(params.sort, (params.order in ['asc', 'desc']) ? params.order : 'asc')
         }
+
+        def criteria = Car.createCriteria()
+
+        def max = (params.max && params.max.toString().isInteger()) ? params.int('max') : 10
+        def offset = (params.offset && params.offset.toString().isInteger()) ? params.int('offset') : 0
+
+        def carList = criteria.list(query, max: (max >= 10 ? max : 10), offset: (offset >= 0) ? offset : 0)
+
         JSON.use('Car') {
             respond carList
         }

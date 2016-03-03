@@ -4,7 +4,7 @@ class Car {
     int year
     String make
     String model
-    String carPlate
+    String carPlate // 'carPlate' es redundante, si 'plate' está dentro de car, se sobreentiende que es del auto.
 
     static belongsTo = [owner : Owner] // Points to the owning object
 
@@ -18,9 +18,6 @@ class Car {
 
     static mapping = {
         table("VehicleModelYear")
-        year column: "year"
-        make column: "make"
-        model column: "model"
-        //owner table: "owner", column: "owner_id"
+        carPlate column: "plate"
     }
 }

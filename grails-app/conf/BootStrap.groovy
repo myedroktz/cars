@@ -16,14 +16,7 @@ class BootStrap {
                          model: car.model,
                          year: car.year,
                          carPlate: car.carPlate,
-                         owner:[
-                             class: Owner.name, //'com.myedro.training.Owner',
-                             id: car.owner.id,
-                             name: car.owner.name,
-                             lastName: car.owner.lastName,
-                             dni: car.owner.dni,
-                             nationality: car.owner.nationality
-                         ]
+                         owner: car.owner
                 ]
             }
         }

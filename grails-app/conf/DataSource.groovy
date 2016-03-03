@@ -2,8 +2,8 @@ dataSource {
     pooled = true
     jmxExport = true
     driverClassName = "com.mysql.jdbc.Driver"//"org.h2.Driver"
-    username = "root"
-    password = "admin"
+    username = "carsktz-app"
+    password = ""
     dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 }
 hibernate {
@@ -19,19 +19,19 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url =  "jdbc:mysql://localhost:3306/carsDatabase"
+            url =  "jdbc:mysql://localhost:3306/carsktzdb.dev"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url =  "jdbc:mysql://localhost:3306/carsDatabase"
+            url =  "jdbc:mysql://localhost:3306/carsktzdb.test"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url =  "jdbc:mysql://localhost:3306/carsDatabase"
+            url =  "jdbc:mysql://localhost:3306/carsktzdb"
             properties {
                 maxActive = -1
                 minEvictableIdleTimeMillis=1800000
