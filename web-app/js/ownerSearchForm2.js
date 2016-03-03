@@ -30,13 +30,14 @@ function updateTableContent(tableBodyId){
         "?name=" + $("#name").val() +
         "&lastName=" + $("#lastName").val() +
         "&nationality=" + $("#nationality").val() +
-        "&dni=" + $("#dni").val()
+        "&dni=" + $("#dni").val() + "&offset=" + $("#offset").val()
 
     $.getJSON(queryString, function(data){
-        var tableBody = $(tableBodyId)
-        for (var i = 0, len = data.length; i < len; i++) {
+        var tableBody = $(tableBodyId);
+        var totalRows = data.content.cantItems;
+        for (var i = 0, len = data.content.owner.length; i < len; i++) {
             //alert(tableElement);
-            var item=data[i];
+            var item=data.content.owner[i];
             tableBody.append($('<tr>')
                     .attr('attr-id',item.id)
                     .append($('<td>')
@@ -60,6 +61,7 @@ function updateTableContent(tableBodyId){
         //After appending
         addRowHandlers("#ownersTable", '#myModal',loadOwnerInModal);
         updateTableHeader("#ownersTable",'#ownerTableHead');
+        updatePaginateButtons("#ownersTable",'#paginateButtons',totalRows);
     });
 }
 
@@ -127,4 +129,38 @@ function cleanModal(modalId, modalKeyElement){
     $(modalId + " [name='nationality']").val('');
     document.getElementById(modalKeyElement.substring(1)).innerHTML = '';
     $(modalKeyElement).attr('attr-id', '');
+}
+
+/***
+ * Update hidden form for pagination
+ */
+function increaseOffset(offsetElementId){
+    $(offsetElementId).val(parseInt($(offsetElementId).val()) + 10);
+    $("#searchButton").trigger('click');
+}
+function decreaseOffset(offsetElementId){
+    $(offsetElementId).val(parseInt($(offsetElementId).val()) - 10);
+    (($(offsetElementId).val() < 0) ? $(offsetElementId).val(0) : 1);
+    $("#searchButton").trigger('click');
+}
+
+function updatePaginateButtons(tableId, paginateButtonsDivId, totalRows){
+    var table = document.getElementById(tableId.substring(1));
+    var rows = table.getElementsByTagName("tr");
+    var paginate = 10;
+    var offset = $("#offset").val();
+
+    if (offset == 0) {
+        document.getElementById("buttonBack").disabled = true;
+        document.getElementById("buttonNext").disabled = false;
+    }
+    else if ((totalRows-offset)<paginate) {
+        document.getElementById("buttonBack").disabled = false;
+        document.getElementById("buttonNext").disabled = true;
+    }
+    else {
+        document.getElementById("buttonBack").disabled = false;
+        document.getElementById("buttonNext").disabled = false;
+    }
+
 }

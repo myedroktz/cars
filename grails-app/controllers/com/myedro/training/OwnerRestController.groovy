@@ -1,5 +1,6 @@
 package com.myedro.training
 import grails.converters.JSON
+import groovy.json.JsonBuilder
 
 class OwnerRestController {
     static responseFormats = ["json","xml"]
@@ -7,7 +8,7 @@ class OwnerRestController {
     def index() {
         def ownerList
         def query = Owner.createCriteria()
-        ownerList = query.list(max:10){
+        ownerList = query.list(max:10, offset:params.offset){
             and{
                 if(params.name){
                     like("name", params.name+'%')
@@ -25,9 +26,42 @@ class OwnerRestController {
                 }
             }
         }
-        JSON.use('Owner') {
-            respond ownerList
+
+        def queryCount = Owner.createCriteria()
+        def ownerCount = queryCount.count(){
+            and{
+                if(params.name){
+                    like("name", params.name+'%')
+                }
+                if(params.lastName){
+                    like("lastName", params.lastName+'%')
+                }
+                if(params.nationality){
+                    like("nationality", params.nationality+'%')
+                }
+                if(params.dni){
+                    def dniIni = params.dni.padRight(8,'0').toInteger()
+                    def dniEnd = params.dni.padRight(8,'0').toInteger() + 10**(8 - params.dni.length()) - 1
+                    between("dni", dniIni, dniEnd)
+                }
+            }
         }
+
+        def json = new JsonBuilder()
+        def root = json {
+            "cantItems" ownerCount
+
+            "owner" ownerList.collect {item ->
+                ["id":item.id,
+                 "dni":item.dni,
+                 "lastName":item.lastName,
+                 "name":item.name,
+                 "nationality":item.nationality
+                ]
+            }
+        }
+
+        respond json;
     }
 
     def show(Integer id) {
@@ -83,5 +117,4 @@ class OwnerRestController {
 
         respond message: message, status: status
     }
-
 }
