@@ -26,6 +26,8 @@
                         <g:form>
                             <g:render template="formFields"/>
 
+                            <input type="hidden" name="offset" id="offset" value="0"/>
+
                             <label class="radio-inline">
                                 <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="JSON"> JSON
                             </label>
@@ -72,6 +74,24 @@
                 <g:render template="ownerTableRow" collection="${ownerList}" var="owner"/>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!--Added pagination for owners-->
+<div class="row">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-primary" id="paginateButtons">
+            <div class="panel-body">
+                <div class="col-md-offset-5 col-md-2">
+                    <button id="buttonBack" onclick="decreaseOffset('#offset')" type="button" class="btn-default btn-lg">
+                        <
+                    </button>
+                    <button id="buttonNext" onclick="increaseOffset('#offset')" type="button" class="btn-default btn-lg">
+                        >
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
