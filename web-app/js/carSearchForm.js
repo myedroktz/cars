@@ -111,7 +111,7 @@ function loadOwnerList(ownerInputElement, ownerListElement){
     $.getJSON(queryString, function(data){
         var len = ((data.length <= 8)? data.length : 8);
         for (var i = 0; i < len; i++){
-            var item=data[i];
+            var item=data.content.owner[i];
             ownerListElement.append($('<a>')
                 .attr('attr-id',item.id)
                 .attr('class','btn btn-success btn-sm')
