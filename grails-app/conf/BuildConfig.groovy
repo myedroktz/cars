@@ -41,15 +41,22 @@ grails.project.dependency.resolution = {
         grailsCentral()
         mavenCentral()
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
-        //mavenRepo "http://repository.codehaus.org"
+        mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
+
+    def gebVersion = "0.13.1"
+    def seleniumVersion = "2.41.0"
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         // runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+
+        test "org.gebish:geb-spock:$gebVersion"
+        test "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+        test "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
 
         //Driver for MySQL
         compile 'mysql:mysql-connector-java:5.1.38'
@@ -60,6 +67,9 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
+        // plugins for the test system only
+        test ":geb:$gebVersion"
+
         // plugins for the build system only
         build ":tomcat:7.0.52.1"
 

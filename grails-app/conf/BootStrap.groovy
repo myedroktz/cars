@@ -32,8 +32,25 @@ class BootStrap {
                  ]
             }
         }
+
+        environments {
+            test {
+                def car = Car.load(1)
+                car.year = 1909
+                car.model = 'Model T'
+                car.make = 'Ford'
+                car.carPlate = 'AAA000'
+                car.save()
+            }
+        }
     }
     def destroy = {
+        environments {
+            test {
+                // def cars = Car.where {year == 2016}
+                // cars*.delete()
+            }
+        }
     }
 
 

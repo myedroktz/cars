@@ -88,7 +88,7 @@ class CarRestController {
             car.validate() && car.save()
 
 
-            respond car
+            respond car, status: 200
         }
         else {
             respond newCar
