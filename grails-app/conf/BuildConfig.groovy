@@ -46,6 +46,9 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
 
+    def gebVersion = "0.9.2"
+    def seleniumVersion = "2.41.0"
+
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         // runtime 'mysql:mysql-connector-java:5.1.27'
@@ -57,6 +60,13 @@ grails.project.dependency.resolution = {
         //Rest and soap plug in
         compile "com.github.groovy-wslite:groovy-wslite:0.7.2"
 
+        //Adds Geb/Spock integration
+        test "org.gebish:geb-spock:$gebVersion"
+
+
+        //Uses Firefox for functional tests
+        test "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+        test "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     }
 
     plugins {
@@ -72,6 +82,9 @@ grails.project.dependency.resolution = {
 
         //Rest Client Plugin
         //compile ":rest-client-builder:2.0.0"
+
+        //Geb
+        test ":geb:$gebVersion" //Adds Gebs Grails Plugin
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.13" // or ":hibernate4:4.3.5.1"
